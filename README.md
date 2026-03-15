@@ -24,7 +24,7 @@ Event communication is handled through Kafka topics.
 ## Technology Stack
 
 - Java 21
-- Spring Boot 3.3
+- Spring Boot 3.3.2
 - Apache Kafka
 - PostgreSQL
 - Docker
@@ -51,9 +51,12 @@ Notification Service
 
 ## Project Structure
 
-order-service – handles order APIs  
-payment-service – processes payment events  
-notification-service – handles notification events
+services/order-service – handles order APIs  
+services/payment-service – processes payment events  
+services/notification-service – handles notification events  
+
+infrastructure/docker – docker configuration  
+docs – architecture documentation
 
 ---
 

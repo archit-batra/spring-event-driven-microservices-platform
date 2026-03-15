@@ -6,9 +6,9 @@
  <modelVersion>4.0.0</modelVersion>
 
  <groupId>io.github.archit-batra</groupId>
- <artifactId>order-service</artifactId>
+ <artifactId>payment-service</artifactId>
  <version>1.0.0</version>
- <name>order-service</name>
+ <name>payment-service</name>
 
  <parent>
   <groupId>org.springframework.boot</groupId>
@@ -49,12 +49,10 @@
 
  <build>
   <plugins>
-
    <plugin>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-maven-plugin</artifactId>
    </plugin>
-
   </plugins>
  </build>
 
