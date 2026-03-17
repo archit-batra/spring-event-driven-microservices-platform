@@ -1,7 +1,7 @@
-package io.github.archit-batra.orderservice.service;
+package in.architbatra.orderservice.service;
 
-import io.github.archit-batra.orderservice.model.Order;
-import io.github.archit-batra.orderservice.repository.OrderRepository;
+import in.architbatra.orderservice.model.Order;
+import in.architbatra.orderservice.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

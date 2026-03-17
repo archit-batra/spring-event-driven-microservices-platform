@@ -1,4 +1,4 @@
-package io.github.archit-batra.orderservice.model;
+package in.architbatra.orderservice.model;
 
 import jakarta.persistence.*;
 

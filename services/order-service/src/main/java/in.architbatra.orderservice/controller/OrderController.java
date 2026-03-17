@@ -1,7 +1,7 @@
-package io.github.archit-batra.orderservice.controller;
+package in.architbatra.orderservice.controller;
 
-import io.github.archit-batra.orderservice.model.Order;
-import io.github.archit-batra.orderservice.service.OrderService;
+import in.architbatra.orderservice.model.Order;
+import in.architbatra.orderservice.service.OrderService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
