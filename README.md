@@ -66,15 +66,17 @@ docs/
 
 ---
 
-## Running PostgreSQL (Docker)
+## Running Infrastructure (Docker)
 
-Start PostgreSQL using Docker:
+Start PostgreSQL and Kafka:
 
 ```bash
 docker-compose up -d
 ```
 
-Database configuration:
+---
+
+### PostgreSQL Configuration
 
 * Host: localhost
 * Port: 5432
@@ -82,23 +84,9 @@ Database configuration:
 * Username: postgres
 * Password: postgres
 
-To stop:
-
-```bash
-docker-compose down
-```
-
 ---
 
-## Running Kafka (Docker)
-
-Kafka is started along with Docker:
-
-```bash
-docker-compose up -d
-```
-
-Kafka configuration:
+### Kafka Configuration
 
 * Host: localhost
 * Port: 9092
@@ -127,21 +115,31 @@ docker exec -it kafka /opt/kafka/bin/kafka-topics.sh \
 
 ---
 
-## Running the Order Service
+## Running the Services
 
-Navigate to the service:
-
-```bash
-cd services/order-service
-```
-
-Run the application:
+### 1. Start Payment Service (Kafka Consumer)
 
 ```bash
+cd services/payment-service
 mvn spring-boot:run
 ```
 
-The service will start on:
+Runs on:
+
+```
+http://localhost:8081
+```
+
+---
+
+### 2. Start Order Service (Kafka Producer)
+
+```bash
+cd services/order-service
+mvn spring-boot:run
+```
+
+Runs on:
 
 ```
 http://localhost:8080
@@ -176,6 +174,31 @@ GET /orders/{id}
 
 ---
 
+## End-to-End Flow Test
+
+1. Start infrastructure using Docker
+2. Start Payment Service
+3. Start Order Service
+
+Create an order:
+
+```bash
+curl -X POST http://localhost:8080/orders \
+-H "Content-Type: application/json" \
+-d '{"product":"iPhone","amount":1000}'
+```
+
+---
+
+### Expected Behavior
+
+* Order is stored in PostgreSQL
+* Order event is published to Kafka (`order-events`)
+* Payment Service consumes the event
+* Payment processing is triggered asynchronously
+
+---
+
 ## Configuration
 
 The application supports environment-based configuration:
@@ -202,3 +225,12 @@ This project demonstrates:
 * Asynchronous processing patterns
 * Scalable backend design
 * Containerized microservices deployment
+
+---
+
+## Current Status
+
+* Order Service with REST APIs and PostgreSQL integration
+* Kafka producer publishing order events
+* Payment Service consuming order events
+* Notification Service (next step)
