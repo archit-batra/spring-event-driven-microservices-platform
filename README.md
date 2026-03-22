@@ -1,6 +1,6 @@
 # Spring Event Driven Microservices Platform
 
-A production-style backend platform built using **Spring Boot and Kafka** demonstrating event-driven microservices architecture, asynchronous communication and scalable backend design.
+A production-style backend platform built using **Spring Boot and Kafka** demonstrating event-driven microservices architecture, asynchronous communication, and scalable backend design.
 
 The system models an order processing pipeline where services communicate through events instead of synchronous API calls.
 
@@ -82,10 +82,47 @@ Database configuration:
 * Username: postgres
 * Password: postgres
 
-To stop the database:
+To stop:
 
 ```bash
 docker-compose down
+```
+
+---
+
+## Running Kafka (Docker)
+
+Kafka is started along with Docker:
+
+```bash
+docker-compose up -d
+```
+
+Kafka configuration:
+
+* Host: localhost
+* Port: 9092
+
+---
+
+## Kafka Topics
+
+The application uses the following topics:
+
+* `order-events`
+* `payment-events` (used in later stages)
+
+Topics may be auto-created in development.
+In production, topics should be created explicitly.
+
+---
+
+## Verifying Kafka Topics
+
+```bash
+docker exec -it kafka /opt/kafka/bin/kafka-topics.sh \
+--list \
+--bootstrap-server localhost:9092
 ```
 
 ---
@@ -149,6 +186,9 @@ spring:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/orders}
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:postgres}
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
 ```
 
 ---
