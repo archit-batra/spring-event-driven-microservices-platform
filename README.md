@@ -12,7 +12,7 @@ The system models an order processing pipeline where services communicate throug
   Handles REST APIs for order creation and publishes order events.
 
 * **Payment Service**
-  Consumes order events and processes payments asynchronously.
+  Consumes order events, processes payments, and publishes payment events.
 
 * **Notification Service**
   Consumes payment events and triggers notifications.
@@ -54,8 +54,8 @@ Notification Service
 ```
 services/
   order-service           # Handles order APIs
-  payment-service         # Processes payment events
-  notification-service    # Handles notification events
+  payment-service         # Consumes order events and publishes payment events
+  notification-service    # Consumes payment events
 
 infrastructure/
   docker/                 # Docker configuration
@@ -98,7 +98,7 @@ docker-compose up -d
 The application uses the following topics:
 
 * `order-events`
-* `payment-events` (used in later stages)
+* `payment-events`
 
 Topics may be auto-created in development.
 In production, topics should be created explicitly.
@@ -117,7 +117,22 @@ docker exec -it kafka /opt/kafka/bin/kafka-topics.sh \
 
 ## Running the Services
 
-### 1. Start Payment Service (Kafka Consumer)
+### 1. Start Notification Service
+
+```bash
+cd services/notification-service
+mvn spring-boot:run
+```
+
+Runs on:
+
+```
+http://localhost:8082
+```
+
+---
+
+### 2. Start Payment Service
 
 ```bash
 cd services/payment-service
@@ -132,7 +147,7 @@ http://localhost:8081
 
 ---
 
-### 2. Start Order Service (Kafka Producer)
+### 3. Start Order Service
 
 ```bash
 cd services/order-service
@@ -177,8 +192,9 @@ GET /orders/{id}
 ## End-to-End Flow Test
 
 1. Start infrastructure using Docker
-2. Start Payment Service
-3. Start Order Service
+2. Start Notification Service
+3. Start Payment Service
+4. Start Order Service
 
 Create an order:
 
@@ -195,7 +211,9 @@ curl -X POST http://localhost:8080/orders \
 * Order is stored in PostgreSQL
 * Order event is published to Kafka (`order-events`)
 * Payment Service consumes the event
-* Payment processing is triggered asynchronously
+* Payment event is published to Kafka (`payment-events`)
+* Notification Service consumes the event
+* Notification is triggered
 
 ---
 
@@ -230,7 +248,7 @@ This project demonstrates:
 
 ## Current Status
 
-* Order Service with REST APIs and PostgreSQL integration
-* Kafka producer publishing order events
-* Payment Service consuming order events
-* Notification Service (next step)
+* Order Service with REST APIs and PostgreSQL integration 
+* Kafka producer publishing order events 
+* Payment Service consuming and publishing events 
+* Notification Service consuming events 
