@@ -1,4 +1,4 @@
-package in.architbatra.paymentservice.consumer;
+package in.architbatra.paymentservice.events;
 
 import in.architbatra.paymentservice.events.OrderCreatedEvent;
 import in.architbatra.paymentservice.events.PaymentCompletedEvent;

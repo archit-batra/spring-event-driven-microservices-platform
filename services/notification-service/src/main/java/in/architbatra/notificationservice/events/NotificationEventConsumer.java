@@ -1,4 +1,4 @@
-package in.architbatra.notificationservice.consumer;
+package in.architbatra.notificationservice.events;
 
 import in.architbatra.notificationservice.events.PaymentCompletedEvent;
 import org.springframework.kafka.annotation.KafkaListener;
