@@ -23,16 +23,16 @@ Event communication is handled through Kafka topics.
 
 ## Architecture Flow
 
-Client
-↓
-Order Service
-↓
-Kafka (order-events topic)
-↓
-Payment Service
-↓
-Kafka (payment-events topic)
-↓
+Client  
+↓  
+Order Service  
+↓  
+Kafka (order-events topic)  
+↓  
+Payment Service  
+↓  
+Kafka (payment-events topic)  
+↓  
 Notification Service
 
 ---
@@ -246,9 +246,9 @@ This project demonstrates:
 
 ---
 
-## Current Status
+## What I'd Add Next
 
-* Order Service with REST APIs and PostgreSQL integration 
-* Kafka producer publishing order events 
-* Payment Service consuming and publishing events 
-* Notification Service consuming events 
+- Dead-letter queue for failed message processing (currently retries indefinitely on malformed events)
+- Idempotency keys to handle duplicate event delivery safely
+- Distributed tracing across services (e.g. Zipkin/Jaeger) for request flow visibility
+- Integration tests covering the full order → payment → notification flow
